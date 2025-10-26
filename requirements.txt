@@ -1,0 +1,5 @@
+pillow~=12.0
+pillow-heif~=1.1 # HEIF/HEIC support for Pillow
+requests~=2.32
+inky~=2.2
+RPi.GPIO~=0.7
