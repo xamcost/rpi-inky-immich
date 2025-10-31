@@ -49,11 +49,12 @@ cd rpi-inky-immich
 pip install -r requirements.txt
 ```
 
-3. Export the necessary environment variables:
+3. Export the necessary environment variables. You can do this manually, or you can copy the `example.env` file to a `.env` file and edit it accordingly. Then source the `.env` file:
 
 ```bash
-export IMMICH_API_URL="https://your-immich-server.com"
-export IMMICH_API_KEY="your_api_key"
+cp example.env .env
+vim .env
+source .env
 ```
 
 4. Launch the script:
