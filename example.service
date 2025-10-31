@@ -1,0 +1,10 @@
+[Unit]
+Description=Inky Immich display
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/home/user/Documents/rpi-immich-display/run.sh
+
+[Install]
+WantedBy=multi-user.target

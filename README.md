@@ -63,6 +63,35 @@ source .env
 python main.py
 ```
 
+## Running on Startup
+
+A `run.sh` script is provided to facilitate running the program on startup. You can set it up using `crontab`, or by creating a `systemd` service. Here's how to do it with `systemd`:
+
+1. Make the `run.sh` script executable:
+
+```bash
+chmod +x run.sh
+```
+
+2. Create a new service file from the provided example:
+
+```bash
+sudo cp example.service /etc/systemd/system/rpi-inky-immich.service
+```
+
+3. Edit the service file to point to your virtual environment and the project directory:
+
+```bash
+sudo vim /etc/systemd/system/rpi-inky-immich.service
+```
+
+4. Enable and start the service:
+
+```bash
+sudo systemctl enable rpi-inky-immich.service
+sudo systemctl start rpi-inky-immich.service
+```
+
 ## Caveats
 
 There are a few important limitations to be aware of:
