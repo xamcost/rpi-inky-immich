@@ -4,8 +4,11 @@
 # Usage: ./run.sh
 # Make sure to give execute permission: chmod +x run.sh
 
+# Navigate to the script's directory
+cd "$(dirname "$0")" || exit 1
+
 # Create venv if it doesn't exist
-if [ ! -d "~/.venv/rpi-immich-display" ]; then
+if [ ! -d "venv" ]; then
   echo "Creating virtual environment..."
   python3 -m venv venv
   echo "Activating virtual environment and installing dependencies..."
