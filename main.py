@@ -7,6 +7,7 @@ import RPi.GPIO as GPIO
 from inky.auto import auto
 from PIL import Image, ImageOps
 from pillow_heif import register_heif_opener
+from requests.adapters import HTTPAdapter, Retry
 
 # import gpiod
 # import gpiodevice
@@ -58,10 +59,22 @@ LABELS = ["A", "B", "C", "D"]
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(BUTTONS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+# Create a requests session with retries
+session = requests.Session()
+retries = Retry(
+    total=10,
+    backoff_factor=1,
+    status_forcelist=[502, 503, 504],
+    allowed_methods=["GET", "POST"],
+)
+adapter = HTTPAdapter(max_retries=retries)
+session.mount("http://", adapter)
+session.mount("https://", adapter)
+
 
 def _get_person_ids(names: list[str]) -> list[str]:
     headers = {"x-api-key": IMMICH_API_KEY}
-    response = requests.get(f"{IMMICH_URL}/api/people", headers=headers)
+    response = session.get(f"{IMMICH_URL}/api/people", headers=headers)
     response.raise_for_status()
     people = response.json()["people"]
 
@@ -82,7 +95,7 @@ def _refresh_image_list():
         body.update({"personIds": person_ids})
 
     print(f"Fetching images for persons {_PERSON_NAMES} with IDs {person_ids}")
-    response = requests.post(
+    response = session.post(
         f"{IMMICH_URL}/api/search/random", headers=headers, json=body
     )
     response.raise_for_status()
@@ -93,7 +106,7 @@ def _refresh_image_list():
 
 def _fetch_image(id: str, size: tuple[int, int]) -> bytes:
     headers = {"x-api-key": IMMICH_API_KEY}
-    response = requests.get(f"{IMMICH_URL}/api/assets/{id}/original", headers=headers)
+    response = session.get(f"{IMMICH_URL}/api/assets/{id}/original", headers=headers)
     response.raise_for_status()
     image = Image.open(BytesIO(response.content))
     image = ImageOps.pad(image, size)
