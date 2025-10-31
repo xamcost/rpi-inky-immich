@@ -18,7 +18,7 @@ IMMICH_API_KEY = os.getenv("IMMICH_API_KEY")
 
 RANDOM_IMAGES = []
 
-PERSON_NAMES = ["Sophie"]
+PERSON_NAMES = os.getenv("IMMICH_PERSON_NAMES", "").split(",")
 _PERSON_NAMES = PERSON_NAMES.copy()
 
 INKY = auto(ask_user=True, verbose=True)
