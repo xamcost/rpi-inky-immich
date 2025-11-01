@@ -4,8 +4,8 @@ This project provides a simple way to display images from a remote [Immich](http
 
 By default, it includes a filter on the persons present in the images when querying Immich. Since I have a [Inky 7 colour display with 4 buttons](https://shop.pimoroni.com/products/inky-impression-4?variant=39599238807635), I included some basic button functionality to navigate through images:
 
-- Button A: Display a new random image
-- Button B: Toggle the person filter on/off
+- Button A: Display a new random image containing the persons listed in the `IMMICH_PERSON_NAMES` environment variable
+- Button B: Display a new random image without any filter
 - Button C: Not used yet!
 - Button D: Shutdown the Raspberry Pi
 
